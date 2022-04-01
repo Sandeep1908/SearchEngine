@@ -3,10 +3,11 @@ import { useLocation } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import { useResultContext } from './context/ResultContextProvider'
 import  Loading  from './Loading'
+import ActionAreaCard from '../MaterialUI/Card/Card'
 const Results = () => {
     const {results,isLoading,getResults,searchTerm}=useResultContext();
     const location=useLocation();
-    
+      
     useEffect(()=>{
       if(searchTerm){
         if(location.pathname==='/videos'){
@@ -14,7 +15,7 @@ const Results = () => {
         }
         else{
 
-          getResults(`${location.pathname}/q=${searchTerm}&num=40`)
+          getResults(`${location.pathname}/q=${searchTerm}&num=100`)
         }
       }
     },[searchTerm,location.pathname])
@@ -25,23 +26,30 @@ const Results = () => {
       
       case '/search':
         return(
-          <div className='flex flex-wrap justify-between break-words space-y-6 sm:px-56'>
-            {results?.map(({link,title},index)=>
+          
+        
+            <div className='md:w-10/12 flex flex-wrap justify-between break-words space-y-6 sm:px-56'>
+          
+            {results?.map((curr,index)=>
              (
-              <div key={index} className="md:w-4/5 w-full">
-                <a href={link} target="_blank" rel="noreferrer">
-                  <p className='text-lg  hover:underline dark:text-blue-300 text-blue-700'>{title}</p>
-                  <p className='text-sm'>{link}</p>
+              <div key={index} className=" md:w-4/5 w-full">
+                {console.log(curr)}
+                <a href={curr.link} target="_blank" rel="noreferrer">
+                  <p className='text-sm'>{curr.link}</p>
+                  <p className='text-lg  hover:underline dark:text-blue-300 text-blue-700'>{curr.title}</p>
                 </a>
+                <p>{curr.description}</p>
               </div>
              )
             )}
-          </div>
-        )
+           </div>
 
+        )
+       
         case '/image':
           return(
             <div className="flex flex-wrap justify-center items-center">
+              
               {results?.map(({image,link:{href,title}},index)=>(
                 
                 <a className="sm:p-3 p-5" href={href} key={index} target="_blank" rel="noreferrer">
@@ -49,6 +57,7 @@ const Results = () => {
                   <p className='w-36 break-words text-sm mt-2'>
                     {title}
                   </p>
+                  
                 </a>
               ))}
             </div>
@@ -57,10 +66,9 @@ const Results = () => {
           case '/news':
             return(
               <div className='flex flex-wrap justify-between space-y-6 sm:px-56 items-center'>
-                {console.log(results)}
-                {results?.map(({links,id,source,title})=>
+                {results?.map(({links,id,source,title},index)=>
                  (
-                  <div key={id} className="md:w-2/5 w-full">
+                  <div key={index} className="md:w-2/5 w-full">
                     <a href={links?.[0].href} target="_blank" rel="noreferrer" className='hover:underline'>
                       <p className='text-lg dark:text-blue-300 text-blue-700'>{title}
                       {title}
@@ -71,6 +79,8 @@ const Results = () => {
                       <a href="source?.href" target='_blank' rel='noreferrer' className='hover:underline'>
                         {source?.href}
                       </a>
+
+                  
                     </div>
                      
                     

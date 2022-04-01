@@ -17,7 +17,11 @@ export const ResultContextProvider=({children})=>{
                 'X-User-Agent': 'desktop',
                 'X-Proxy-Location': 'EU',
                 'X-RapidAPI-Host': 'google-search3.p.rapidapi.com',
-                'X-RapidAPI-Key': 'd86f438cc9mshd69a78890b2b559p14c927jsn31004db631bd'
+                'X-RapidAPI-Key': 'd86f438cc9mshd69a78890b2b559p14c927jsn31004db631bd',
+                'Access-Control-Allow-Credentials' : true,
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'GET',
+                'Access-Control-Allow-Headers':'application/json'
             }
         });
         const data=await response.json();
